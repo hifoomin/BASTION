@@ -9,13 +9,9 @@ namespace Bastion.Content
         {
             ContentBase.AddEntityState(typeof(CONFIGURATIONRecon));
 
-            ContentBase.AddEntityState(typeof(SlashCombo));
-
-            ContentBase.AddEntityState(typeof(Shoot));
+            ContentBase.AddEntityState(typeof(SELFREPAIR));
 
             ContentBase.AddEntityState(typeof(Roll));
-
-            ContentBase.AddEntityState(typeof(ThrowBomb));
         }
     }
 }

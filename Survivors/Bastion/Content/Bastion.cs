@@ -5,11 +5,10 @@ using RoR2.Skills;
 using System.Collections.Generic;
 using UnityEngine;
 using Bastion.States;
-using Bastion.Content;
 
-namespace Bastion
+namespace Bastion.Content
 {
-    public class BastionSurvivor : SurvivorBase<BastionSurvivor>
+    public class Bastion : SurvivorBase<Bastion>
     {
         //used to load the assetbundle for this character. must be unique
         public override string assetBundleName => "bastion"; //if you do not change this, you are giving permission to deprecate the mod
@@ -24,7 +23,7 @@ namespace Bastion
         public override string modelPrefabName => "mdlBastion";
         public override string displayPrefabName => "BastionDisplay";
 
-        public const string BASTION_PREFIX = BastionMod.DEVELOPER_PREFIX + "_BASTION_";
+        public const string BASTION_PREFIX = Main.DEVELOPER_PREFIX + "_BASTION_";
 
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => BASTION_PREFIX;
@@ -216,14 +215,14 @@ namespace Bastion
 
             SkillDef primarySkillDef1 = SkillBase.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "HenryGun",
-                skillNameToken = BASTION_PREFIX + "SECONDARY_GUN_NAME",
-                skillDescriptionToken = BASTION_PREFIX + "SECONDARY_GUN_DESCRIPTION",
+                skillName = "CONFIGURATION: Recon",
+                skillNameToken = BASTION_PREFIX + "PRIMARY_NAME",
+                skillDescriptionToken = BASTION_PREFIX + "PRIMARY_DESC",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CONFIGURATIONRecon)),
                 activationStateMachineName = "Weapon2",
-                interruptPriority = EntityStates.InterruptPriority.Skill,
+                interruptPriority = EntityStates.InterruptPriority.Any,
 
                 baseRechargeInterval = 0,
                 baseMaxStock = 1,
@@ -245,7 +244,7 @@ namespace Bastion
 
             });
 
-            SkillBase.AddSecondarySkills(bodyPrefab, primarySkillDef1);
+            SkillBase.AddPrimarySkills(bodyPrefab, primarySkillDef1);
         }
 
         private void AddSecondarySkills()
@@ -255,16 +254,16 @@ namespace Bastion
             //here is a basic skill def with all fields accounted for
             SkillDef secondarySkillDef1 = SkillBase.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "CONFIGURATION: Recon",
-                skillNameToken = BASTION_PREFIX + "PRIMARY_NAME",
-                skillDescriptionToken = BASTION_PREFIX + "PRIMARY_DESC",
+                skillName = "SELF-REPAIR",
+                skillNameToken = BASTION_PREFIX + "SECONDARY_NAME",
+                skillDescriptionToken = BASTION_PREFIX + "SECONDARY_DESC",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(CONFIGURATIONRecon)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SELFREPAIR)),
                 activationStateMachineName = "Weapon2",
-                interruptPriority = EntityStates.InterruptPriority.Skill,
+                interruptPriority = EntityStates.InterruptPriority.Any,
 
-                baseRechargeInterval = 1f,
+                baseRechargeInterval = 8f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -274,10 +273,10 @@ namespace Bastion
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
-                mustKeyPress = false,
-                beginSkillCooldownOnSkillEnd = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
 
-                isCombatSkill = true,
+                isCombatSkill = false,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
@@ -294,9 +293,9 @@ namespace Bastion
             //here's a skilldef of a typical movement skill.
             SkillDef utilitySkillDef1 = SkillBase.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "HenryRoll",
-                skillNameToken = BASTION_PREFIX + "UTILITY_ROLL_NAME",
-                skillDescriptionToken = BASTION_PREFIX + "UTILITY_ROLL_DESCRIPTION",
+                skillName = "tempp",
+                skillNameToken = BASTION_PREFIX + "tempp",
+                skillDescriptionToken = BASTION_PREFIX + "tempp",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(Roll)),
@@ -332,15 +331,15 @@ namespace Bastion
             //a basic skill. some fields are omitted and will just have default values
             SkillDef specialSkillDef1 = SkillBase.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "HenryBomb",
-                skillNameToken = BASTION_PREFIX + "SPECIAL_BOMB_NAME",
-                skillDescriptionToken = BASTION_PREFIX + "SPECIAL_BOMB_DESCRIPTION",
+                skillName = "temppp",
+                skillNameToken = BASTION_PREFIX + "temppp",
+                skillDescriptionToken = BASTION_PREFIX + "temppp",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(ThrowBomb)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(Roll)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
                 activationStateMachineName = "Weapon2",
-                interruptPriority = EntityStates.InterruptPriority.Skill,
+                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseMaxStock = 1,
                 baseRechargeInterval = 10f,

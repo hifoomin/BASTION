@@ -33,7 +33,7 @@ namespace Bastion.Modules
             AssetBundle assetBundle = null;
             try
             {
-                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(BastionMod.instance.Info.Location), "AssetBundles", bundleName));
+                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Main.instance.Info.Location), "AssetBundles", bundleName));
             }
             catch (System.Exception e)
             {

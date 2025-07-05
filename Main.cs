@@ -1,4 +1,5 @@
-﻿using BepInEx;
+﻿using Bastion.Content;
+using BepInEx;
 using R2API.Utils;
 using System.Security;
 using System.Security.Permissions;
@@ -15,7 +16,7 @@ namespace Bastion
     //[BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
-    public class BastionMod : BaseUnityPlugin
+    public class Main : BaseUnityPlugin
     {
         // if you do not change this, you are giving permission to deprecate the mod-
         //  please change the names to your own stuff, thanks
@@ -27,7 +28,7 @@ namespace Bastion
         // a prefix for name tokens to prevent conflicts- please capitalize all name tokens for convention
         public const string DEVELOPER_PREFIX = "HIFU";
 
-        public static BastionMod instance;
+        public static Main instance;
 
         public ParticleSystem faggot;
 
@@ -42,7 +43,7 @@ namespace Bastion
             Modules.LanguageBase.Init();
 
             // character initialization
-            new BastionSurvivor().Initialize();
+            new Content.Bastion().Initialize();
 
             // make a content pack and add it. this has to be last
             new Modules.ContentPack().Initialize();

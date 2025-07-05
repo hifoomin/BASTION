@@ -17,7 +17,7 @@ namespace Bastion.Content
 
         public static void AddHenryTokens()
         {
-            string prefix = BastionSurvivor.BASTION_PREFIX;
+            string prefix = Content.Bastion.BASTION_PREFIX;
 
             string desc = "Henry is a skilled fighter who makes use of a wide arsenal of weaponry to take down his foes.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine
              + "< ! > Sword is a good all-rounder while Boxing Gloves are better for laying a beatdown on more powerful foes." + Environment.NewLine + Environment.NewLine
@@ -45,13 +45,13 @@ namespace Bastion.Content
             #endregion
 
             #region Primary
-            LanguageBase.Add(prefix + "PRIMARY_SLASH_NAME", "Sword");
-            LanguageBase.Add(prefix + "PRIMARY_SLASH_DESCRIPTION", TokenBase.agilePrefix + $"Swing forward for <style=cIsDamage>{100f * StaticValues.swordDamageCoefficient}% damage</style>.");
+            LanguageBase.Add(prefix + "PRIMARY_NAME", "CONFIGURATION: Recon");
+            LanguageBase.Add(prefix + "PRIMARY_DESC", $"Fire a steady stream of bullets for <style=cIsDamage>100% damage</style>.");
             #endregion
 
             #region Secondary
-            LanguageBase.Add(prefix + "SECONDARY_GUN_NAME", "Handgun");
-            LanguageBase.Add(prefix + "SECONDARY_GUN_DESCRIPTION", TokenBase.agilePrefix + $"Fire a handgun for <style=cIsDamage>{100f * StaticValues.gunDamageCoefficient}% damage</style>.");
+            LanguageBase.Add(prefix + "SECONDARY_NAME", "SELF-REPAIR");
+            LanguageBase.Add(prefix + "SECONDARY_DESC", $"Reconstruct your components, healing <style=cIsHealing>10%</style> of your <style=cIsHealing>maximum health</style> per second.");
             #endregion
 
             #region Utility
@@ -61,7 +61,7 @@ namespace Bastion.Content
 
             #region Special
             LanguageBase.Add(prefix + "SPECIAL_BOMB_NAME", "Bomb");
-            LanguageBase.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", $"Throw a bomb for <style=cIsDamage>{100f * StaticValues.bombDamageCoefficient}% damage</style>.");
+            LanguageBase.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", $"Throw a bomb for <style=cIsDamage>a% damage</style>.");
             #endregion
 
             #region Achievements

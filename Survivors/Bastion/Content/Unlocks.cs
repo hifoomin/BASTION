@@ -14,7 +14,7 @@ namespace Bastion.Content
             masterySkinUnlockableDef = ContentBase.CreateAndAddUnlockbleDef(
                 BastionMasteryAchievement.unlockableIdentifier,
                 TokenBase.GetAchievementNameToken(BastionMasteryAchievement.identifier),
-                BastionSurvivor.instance.assetBundle.LoadAsset<Sprite>("texMasteryAchievement"));
+                Content.Bastion.instance.assetBundle.LoadAsset<Sprite>("texMasteryAchievement"));
         }
     }
 
@@ -22,10 +22,10 @@ namespace Bastion.Content
     [RegisterAchievement(identifier, unlockableIdentifier, null, 10, null)]
     public class BastionMasteryAchievement : Modules.Achievements.BaseMasteryAchievement
     {
-        public const string identifier = BastionSurvivor.BASTION_PREFIX + "masteryAchievement";
-        public const string unlockableIdentifier = BastionSurvivor.BASTION_PREFIX + "masteryUnlockable";
+        public const string identifier = Bastion.BASTION_PREFIX + "masteryAchievement";
+        public const string unlockableIdentifier = Bastion.BASTION_PREFIX + "masteryUnlockable";
 
-        public override string RequiredCharacterBody => BastionSurvivor.instance.bodyName;
+        public override string RequiredCharacterBody => Bastion.instance.bodyName;
 
         //difficulty coeff 3 is monsoon. 3.5 is typhoon for grandmastery skins
         public override float RequiredDifficultyCoefficient => 3;

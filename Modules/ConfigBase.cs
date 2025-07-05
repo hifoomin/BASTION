@@ -6,7 +6,7 @@ namespace Bastion.Modules
 {
     public static class ConfigBase
     {
-        public static ConfigFile MyConfig = BastionMod.instance.Config;
+        public static ConfigFile MyConfig = Main.instance.Config;
 
         /// <summary>
         /// automatically makes config entries for disabling survivors

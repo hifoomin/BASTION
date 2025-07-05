@@ -10,7 +10,7 @@ namespace Bastion.Modules
     internal class ContentPack : IContentPackProvider
     {
         internal RoR2.ContentManagement.ContentPack contentPack = new RoR2.ContentManagement.ContentPack();
-        public string identifier => BastionMod.MODUID;
+        public string identifier => Main.MODUID;
 
         public static List<GameObject> bodyPrefabs = new List<GameObject>();
         public static List<GameObject> masterPrefabs = new List<GameObject>();
