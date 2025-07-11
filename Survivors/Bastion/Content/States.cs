@@ -7,9 +7,13 @@ namespace Bastion.Content
     {
         public static void Init()
         {
-            ContentBase.AddEntityState(typeof(CONFIGURATIONRecon));
+            ContentBase.AddEntityState(typeof(ConfigurationRecon));
 
-            ContentBase.AddEntityState(typeof(SELFREPAIR));
+            ContentBase.AddEntityState(typeof(SelfRepair));
+
+            ContentBase.AddEntityState(typeof(ToggleConfigurationAssault));
+
+            ContentBase.AddEntityState(typeof(ConfigurationAssault));
 
             ContentBase.AddEntityState(typeof(Roll));
         }

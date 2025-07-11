@@ -35,13 +35,13 @@ namespace Bastion.Content
             subtitleNameToken = BASTION_PREFIX + "SUBTITLE",
 
             characterPortrait = assetBundle.LoadAsset<Texture>("texHenryIcon"),
-            bodyColor = Color.white,
+            bodyColor = new Color((226f / 255f), (240f / 255f), (195f / 255f)),
             sortPosition = 100,
 
             crosshair = AssetBase.LoadCrosshair("Standard"),
             podPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
 
-            maxHealth = 160f,
+            maxHealth = 120f,
             healthRegen = 1f,
             armor = 20f,
 
@@ -52,17 +52,14 @@ namespace Bastion.Content
         {
                 new CustomRendererInfo
                 {
-                    childName = "SwordModel",
-                    material = assetBundle.LoadMaterial("matHenry"),
+                    childName = "BastionBody",
+                    material = assetBundle.LoadMaterial("matBastion"),
                 },
                 new CustomRendererInfo
                 {
-                    childName = "GunModel",
+                    childName = "HealRing",
+                    material = assetBundle.LoadMaterial("matBastionHealingRing")
                 },
-                new CustomRendererInfo
-                {
-                    childName = "Model",
-                }
         };
 
         public override UnlockableDef characterUnlockableDef => Unlocks.characterUnlockableDef;
@@ -77,6 +74,11 @@ namespace Bastion.Content
         public override GameObject characterModelObject { get; protected set; }
         public override CharacterModel prefabCharacterModel { get; protected set; }
         public override GameObject displayPrefab { get; protected set; }
+
+        public static SkillDef configurationReconSkillDef;
+        public static SkillDef altM1SkillDef;
+        public static SkillDef configurationAssaultShootSkillDef;
+        public static SkillDef configurationAssaultCancelSkillDef;
 
         public override void Initialize()
         {
@@ -124,7 +126,7 @@ namespace Bastion.Content
         public void AddHitboxes()
         {
             //example of how to create a HitBoxGroup. see summary for more details
-            PrefabBase.SetupHitBoxGroup(characterModelObject, "SwordGroup", "SwordHitbox");
+            // PrefabBase.SetupHitBoxGroup(characterModelObject, "SwordGroup", "SwordHitbox");
         }
 
         public override void InitializeEntityStateMachines()
@@ -213,15 +215,15 @@ namespace Bastion.Content
         {
             SkillBase.CreateGenericSkillWithSkillFamily(bodyPrefab, SkillSlot.Primary);
 
-            SkillDef primarySkillDef1 = SkillBase.CreateSkillDef(new SkillDefInfo
+            configurationReconSkillDef = SkillBase.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "CONFIGURATION: Recon",
                 skillNameToken = BASTION_PREFIX + "PRIMARY_NAME",
                 skillDescriptionToken = BASTION_PREFIX + "PRIMARY_DESC",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(CONFIGURATIONRecon)),
-                activationStateMachineName = "Weapon2",
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ConfigurationRecon)),
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Any,
 
                 baseRechargeInterval = 0,
@@ -244,7 +246,38 @@ namespace Bastion.Content
 
             });
 
-            SkillBase.AddPrimarySkills(bodyPrefab, primarySkillDef1);
+            configurationAssaultShootSkillDef = SkillBase.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "CONFIGURATION: Assault",
+                skillNameToken = BASTION_PREFIX + "PRIMARY_OVERRIDE_ASSAULT_NAME",
+                skillDescriptionToken = BASTION_PREFIX + "PRIMARY_OVERRIDE_ASSAULT_DESC",
+                skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ConfigurationAssault)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Any,
+
+                baseRechargeInterval = 0,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+            });
+
+            SkillBase.AddPrimarySkills(bodyPrefab, configurationReconSkillDef);
         }
 
         private void AddSecondarySkills()
@@ -259,8 +292,8 @@ namespace Bastion.Content
                 skillDescriptionToken = BASTION_PREFIX + "SECONDARY_DESC",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SELFREPAIR)),
-                activationStateMachineName = "Weapon2",
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SelfRepair)),
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Any,
 
                 baseRechargeInterval = 8f,
@@ -293,16 +326,16 @@ namespace Bastion.Content
             //here's a skilldef of a typical movement skill.
             SkillDef utilitySkillDef1 = SkillBase.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "tempp",
-                skillNameToken = BASTION_PREFIX + "tempp",
-                skillDescriptionToken = BASTION_PREFIX + "tempp",
+                skillName = "Enter CONFIGURATION: Assault",
+                skillNameToken = BASTION_PREFIX + "UTILITY_NAME",
+                skillDescriptionToken = BASTION_PREFIX + "UTILITY_DESC",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(Roll)),
-                activationStateMachineName = "Body",
-                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ToggleConfigurationAssault)),
+                activationStateMachineName = "Weapon2",
+                interruptPriority = EntityStates.InterruptPriority.Any,
 
-                baseRechargeInterval = 4f,
+                baseRechargeInterval = 12f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -313,7 +346,37 @@ namespace Bastion.Content
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
                 mustKeyPress = false,
-                beginSkillCooldownOnSkillEnd = false,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = true,
+            });
+
+            configurationAssaultCancelSkillDef = SkillBase.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "Cancel CONFIGURATION: Assault",
+                skillNameToken = BASTION_PREFIX + "UTILITY_OVERRIDE_ASSAULT_NAME",
+                skillDescriptionToken = BASTION_PREFIX + "UTILITY_OVERRIDE_ASSAULT_DESC",
+                skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ToggleConfigurationAssault)),
+                activationStateMachineName = "Weapon2",
+                interruptPriority = EntityStates.InterruptPriority.Any,
+
+                baseRechargeInterval = 12f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = true,
 
                 isCombatSkill = false,
                 canceledFromSprinting = false,
@@ -338,7 +401,7 @@ namespace Bastion.Content
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(Roll)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
-                activationStateMachineName = "Weapon2",
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
                 baseMaxStock = 1,

@@ -46,17 +46,20 @@ namespace Bastion.Content
 
             #region Primary
             LanguageBase.Add(prefix + "PRIMARY_NAME", "CONFIGURATION: Recon");
-            LanguageBase.Add(prefix + "PRIMARY_DESC", $"Fire a steady stream of bullets for <style=cIsDamage>100% damage</style>.");
+            LanguageBase.Add(prefix + "PRIMARY_DESC", $"Rapidly fire bullets for <style=cIsDamage>100% damage</style>.");
             #endregion
 
             #region Secondary
             LanguageBase.Add(prefix + "SECONDARY_NAME", "SELF-REPAIR");
-            LanguageBase.Add(prefix + "SECONDARY_DESC", $"Reconstruct your components, healing <style=cIsHealing>10%</style> of your <style=cIsHealing>maximum health</style> per second.");
+            LanguageBase.Add(prefix + "SECONDARY_DESC", $"Reconstruct your components, healing for <style=cIsHealing>10%</style> of your <style=cIsHealing>maximum health</style> per second.");
             #endregion
 
             #region Utility
-            LanguageBase.Add(prefix + "UTILITY_ROLL_NAME", "Roll");
-            LanguageBase.Add(prefix + "UTILITY_ROLL_DESCRIPTION", "Roll a short distance, gaining <style=cIsUtility>300 armor</style>. <style=cIsUtility>You cannot be hit during the roll.</style>");
+            LanguageBase.Add(prefix + "UTILITY_NAME", "CONFIGURATION: Assault");
+            LanguageBase.Add(prefix + "UTILITY_DESC", "Reconfigure into a <style=cIsUtility>stationary turret</style>, equipped with with a <style=cIsDamage>powerful minigun</style> dealing <style=cIsDamage>1500%</style> damage per second.");
+
+            LanguageBase.Add(prefix + "UTILITY_OVERRIDE_ASSAULT_NAME", "Cancel CONFIGURATION: Assault");
+            LanguageBase.Add(prefix + "UTILITY_OVERRIDE_ASSAULT_DESC", "Reconfigure into a <style=cIsUtility>stationary turret</style>, equipped with with a <style=cIsDamage>powerful minigun</style> dealing <style=cIsDamage>1500%</style> damage per second.");
             #endregion
 
             #region Special

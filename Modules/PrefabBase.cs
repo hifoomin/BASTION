@@ -415,7 +415,7 @@ namespace Bastion.Modules
 
             ChildLocator childLocator = model.GetComponent<ChildLocator>();
 
-            if (string.IsNullOrEmpty(childLocator.FindChildNameInsensitive("MainHurtbox")))
+            if (string.IsNullOrEmpty(childLocator.FindChildNameInsensitive("HurtBox")))
             {
                 Log.Error("Could not set up main hurtbox: make sure you have a transform pair in your prefab's ChildLocator called 'MainHurtbox'");
                 return;
@@ -438,7 +438,7 @@ namespace Bastion.Modules
                 headHurtbox.indexInGroup = 1;
             }
 
-            HurtBox mainHurtbox = childLocator.FindChildGameObjectInsensitive("MainHurtbox").AddComponent<HurtBox>();
+            HurtBox mainHurtbox = childLocator.FindChildGameObjectInsensitive("HurtBox").AddComponent<HurtBox>();
             mainHurtbox.gameObject.layer = LayerIndex.entityPrecise.intVal;
             mainHurtbox.healthComponent = bodyPrefab.GetComponent<HealthComponent>();
             mainHurtbox.isBullseye = true;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Bastion.States
 {
-    public class SELFREPAIR : BaseState
+    public class SelfRepair : BaseState
     {
         public static float buffInterval = 1f;
         public float timer = 0f;
